@@ -1,0 +1,23 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.python.org/simple/"
+verify_ssl = true
+
+[dev-packages]
+flake8 = "*"
+black = "*"
+
+[packages]
+django-pyodbc-azure = "*"
+django = "==2.1.15"
+djangorestframework = "*"
+pyjwt = "*"
+django-seed = "*"
+pillow = "*"
+faker = "*"
+
+[requires]
+python_version = "3.7"
+
+[pipenv]
+allow_prereleases = true

@@ -1,0 +1,10 @@
+{
+    "python.pythonPath": "C:\\Users\\KimJiYong\\.virtualenvs\\ACK_Python-wYgVXe1N\\Scripts\\python.exe",
+    "python.formatting.provider": "black",
+    "python.linting.flake8Enabled": true,
+    "python.linting.enabled": true,
+    "editor.formatOnSave": true,
+    "python.linting.flake8Args": [
+        "--max-line-length=91"
+    ]
+}
