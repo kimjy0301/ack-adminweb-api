@@ -3,4 +3,6 @@ from . import views
 
 app_name = "core"
 
-urlpatterns = []
+urlpatterns = [
+    path("status/", views.ServerStatusView.as_view()),
+]

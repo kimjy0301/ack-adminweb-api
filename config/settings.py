@@ -49,6 +49,7 @@ PROJECT_APPS = [
 THIRD_PARTY_APPS = [
     "rest_framework",
     "faker",
+    "corsheaders",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + THIRD_PARTY_APPS
@@ -56,6 +57,7 @@ INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + THIRD_PARTY_APPS
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -115,7 +117,7 @@ DATABASES = {
         "PASSWORD": "ack1236",
         "HOST": "183.97.137.113",
         "PORT": "",
-        "OPTIONS": {"driver": "ODBC Driver 13 for SQL Server",},
+        "OPTIONS": {"driver": "ODBC Driver 13 for SQL Server"},
     }
 }
 
@@ -127,9 +129,9 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
-    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",},
-    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",},
-    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",},
+    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
+    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
+    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
 ]
 
 
@@ -170,8 +172,14 @@ REST_FRAMEWORK = {
     ],
 }
 
+CORS_ORIGIN_WHITELIST = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+]
+
 
 if not DEBUG:
     REST_FRAMEWORK = {
-        "DEFAULT_RENDERER_CLASSES": ["rest_framework.renderers.JSONRenderer",]
+        "DEFAULT_RENDERER_CLASSES": ["rest_framework.renderers.JSONRenderer"]
     }
+

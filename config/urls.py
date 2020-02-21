@@ -8,6 +8,7 @@ from django.conf.urls import url
 urlpatterns = [
     url("admin/", admin.site.urls),
     path("api/v1/users/", include("user.urls")),
+    path("api/v1/core/", include("core.urls")),
     path("api/v1/emrif/", include("emrif.urls")),
 ]
 
