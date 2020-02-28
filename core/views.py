@@ -15,14 +15,14 @@ class ServerStatusView(APIView):
         cpu = psutil.cpu_percent()
         disk = psutil.disk_usage("C:/")
 
-        total_memory = round(memory.total / (1024 ** 3), 2)
-        free_memory = round(memory.available / (1024 ** 3), 2)
+        total_memory = round(memory.total / (1024 ** 3), 1)
+        free_memory = round(memory.available / (1024 ** 3), 1)
         percent_memory = memory.percent
-        used_memory = round(memory.used / (1024 ** 3), 2)
+        used_memory = round(memory.used / (1024 ** 3), 1)
 
-        total_disk = round(disk.total / (1024 ** 3), 2)
-        free_disk = round(disk.free / (1024 ** 3), 2)
-        used_disk = round(disk.used / (1024 ** 3), 2)
+        total_disk = round(disk.total / (1024 ** 3), 1)
+        free_disk = round(disk.free / (1024 ** 3), 1)
+        used_disk = round(disk.used / (1024 ** 3), 1)
         percent_disk = disk.percent
 
         data = {

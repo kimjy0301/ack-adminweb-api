@@ -85,6 +85,9 @@ class EmrifPc(CoreModel):
     class Meta:
         managed = False
         db_table = "EMRIF_PC"
+        ordering = [
+            "status",
+        ]
 
     def __str__(self):
         return f"{self.ip} / {self.equip}"

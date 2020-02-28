@@ -41,6 +41,7 @@ class EmrifEquipSerializer(serializers.ModelSerializer):
 
 class EmrifPcSerializer(serializers.ModelSerializer):
     equip = EmrifEquipSerializer(read_only=True)
+    error_count = serializers.SerializerMethodField()
 
     class Meta:
         model = EmrifPc
@@ -49,7 +50,12 @@ class EmrifPcSerializer(serializers.ModelSerializer):
             "ip",
             "equip",
             "status",
+            "error_count",
         ]
+
+    def get_error_count(self, obj):
+        count = EmrifError.objects.filter(pc=obj).count()
+        return count
 
 
 class EmrifErrorSerializer(serializers.ModelSerializer):

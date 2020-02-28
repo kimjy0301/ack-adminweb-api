@@ -25,7 +25,7 @@ SECRET_KEY = "cyl_xnf)57a=t9(5c72(p@(4_890!9ha30xun=1f^zn9xy$tk1"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["192.168.215.55", "localhost"]
 
 
 # Application definition
@@ -165,7 +165,7 @@ AUTH_USER_MODEL = "user.User"
 REST_FRAMEWORK = {
     # "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
-    "PAGE_SIZE": 10,
+    "PAGE_SIZE": 150,
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "config.authentication.JWTAuthentication",
         "rest_framework.authentication.SessionAuthentication",
@@ -175,6 +175,7 @@ REST_FRAMEWORK = {
 CORS_ORIGIN_WHITELIST = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
+    "http://192.168.215.55:3000",
 ]
 
 
