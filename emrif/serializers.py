@@ -16,12 +16,7 @@ class EmrifLabSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = EmrifLab
-        fields = [
-            "id",
-            "name",
-            "dept",
-            "call_number",
-        ]
+        fields = ["id", "name", "dept", "call_number", "bg_image"]
 
 
 class EmrifEquipSerializer(serializers.ModelSerializer):
@@ -51,6 +46,8 @@ class EmrifPcSerializer(serializers.ModelSerializer):
             "equip",
             "status",
             "error_count",
+            "position_left",
+            "position_right",
         ]
 
     def get_error_count(self, obj):

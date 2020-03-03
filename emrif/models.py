@@ -65,6 +65,7 @@ class EmrifLab(CoreModel):
     call_number = models.CharField(
         db_column="CALL_NUMBER", max_length=50, blank=True, null=True
     )
+    bg_image = models.ImageField(db_column="BG_IMAGE", blank=True, null=True)
 
     class Meta:
         managed = False
@@ -81,6 +82,12 @@ class EmrifPc(CoreModel):
         EmrifEquip, models.DO_NOTHING, db_column="EQUP_ID", blank=True, null=True
     )
     status = models.CharField(db_column="STATUS", max_length=50, blank=True, null=True)
+    position_left = models.CharField(
+        db_column="POSITION_LEFT", max_length=50, blank=True, null=True
+    )
+    position_right = models.CharField(
+        db_column="POSITION_RIGHT", max_length=50, blank=True, null=True
+    )
 
     class Meta:
         managed = False
