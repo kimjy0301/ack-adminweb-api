@@ -23,3 +23,47 @@ class ServerStatusSerializer(serializers.BaseSerializer):
             "cpu": instance.get("cpu", None),
         }
 
+
+class EmrifYearSerializer(serializers.BaseSerializer):
+    month = serializers.CharField()
+    send_count = serializers.IntegerField()
+    error_count = serializers.IntegerField()
+
+    def to_representation(self, instance):
+        returndata = []
+        for monthData in instance:
+            data = {
+                "month": monthData.get("month", None),
+                "send_count": monthData.get("send_count", None),
+                "error_count": monthData.get("error_count", None),
+            }
+            returndata.append(data)
+        return returndata
+
+
+class EmrifWeekSerializer(serializers.BaseSerializer):
+    send_count = serializers.IntegerField()
+    error_count = serializers.IntegerField()
+
+    def to_representation(self, instance):
+        return {
+            "send_count": instance.get("send_count", None),
+            "error_count": instance.get("error_count", None),
+        }
+
+
+class EmrifDeptSerializer(serializers.BaseSerializer):
+    dept = serializers.CharField()
+    send_count = serializers.IntegerField()
+    error_count = serializers.IntegerField()
+
+    def to_representation(self, instance):
+        returndata = []
+        for monthData in instance:
+            data = {
+                "dept": monthData.get("dept", None),
+                "send_count": monthData.get("send_count", None),
+                "error_count": monthData.get("error_count", None),
+            }
+            returndata.append(data)
+        return returndata

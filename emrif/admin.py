@@ -27,3 +27,8 @@ class EmrifErrorAdmin(admin.ModelAdmin):
 @admin.register(models.EmrifLab)
 class EmrifLabAdmin(admin.ModelAdmin):
     pass
+
+
+@admin.register(models.EmrifAib)
+class EmrifAibAdmin(admin.ModelAdmin):
+    pass

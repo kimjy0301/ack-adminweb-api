@@ -9,6 +9,8 @@ from .serializers import (
 from .models import EmrifPc, EmrifDept, EmrifEquip, EmrifError, EmrifLab
 from rest_framework import permissions
 from rest_framework.decorators import action
+from rest_framework.response import Response
+from rest_framework import status
 
 
 class EmrifPcViewSet(ModelViewSet):
@@ -106,3 +108,17 @@ class EmrifLabViewSet(ModelViewSet):
 
         return [permission() for permission in permission_classes]
 
+    @action(detail=False, url_path="search")
+    def search(self, request):
+
+        floor = request.GET.get("floor", None)
+
+        filter_kwargs = {}
+        if floor is not None:
+            filter_kwargs["floor"] = floor
+        try:
+            emrifLabs = EmrifLab.objects.filter(**filter_kwargs)
+        except ValueError:
+            emrifLabs = EmrifLab.objects.all()
+        serializer = EmrifLabSerializer(instance=emrifLabs, many=True)
+        return Response(data=serializer.data, status=status.HTTP_200_OK)

@@ -26,6 +26,5 @@ class Command(BaseCommand):
             all_dept = EmrifDept.objects.all()
             dept = random.choice(all_dept)
 
-            EmrifLab.objects.create(
-                name=name, dept=dept, call_number=callnumber)
+            EmrifLab.objects.create(name=name, dept=dept, call_number=callnumber)
         self.stdout.write(self.style.SUCCESS(f"Everything seeded"))

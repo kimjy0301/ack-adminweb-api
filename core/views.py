@@ -3,7 +3,14 @@ from rest_framework import status
 from rest_framework.views import APIView
 import psutil
 from rest_framework import permissions
-from .serializers import ServerStatusSerializer
+from .serializers import (
+    ServerStatusSerializer,
+    EmrifYearSerializer,
+    EmrifWeekSerializer,
+    EmrifDeptSerializer,
+)
+from emrif.models import EmrifAib, EmrifError
+import datetime
 
 
 class ServerStatusView(APIView):
@@ -38,4 +45,96 @@ class ServerStatusView(APIView):
         }
 
         serializer = ServerStatusSerializer(data)
+        return Response(data=serializer.data, status=status.HTTP_200_OK)
+
+
+class EmrifYearView(APIView):
+    pagination_class = None
+    permission_classes = [permissions.IsAdminUser]
+
+    def get(self, request):
+        year = request.GET.get("year", None)
+        filter_kwargs = {}
+        if year is None:
+            year = datetime.datetime.now().year
+        data = []
+
+        for month in range(1, 13):
+            filter_kwargs["created__year"] = year
+            filter_kwargs["created__month"] = month
+            month_send_count = EmrifAib.objects.filter(**filter_kwargs).count()
+            month_error_count = EmrifError.objects.filter(**filter_kwargs).count()
+            tempdata = {
+                "month": f"{month}월",
+                "send_count": month_send_count,
+                "error_count": month_error_count,
+            }
+            data.append(tempdata)
+        serializer = EmrifYearSerializer(data)
+        return Response(data=serializer.data, status=status.HTTP_200_OK)
+
+
+class EmrifWeekView(APIView):
+    pagination_class = None
+    permission_classes = [permissions.IsAdminUser]
+
+    def get(self, request):
+        year = request.GET.get("year", None)
+        filter_kwargs = {}
+        if year is None:
+            year = datetime.datetime.now().year
+        data = []
+
+        week = request.GET.get("week", None)
+        filter_kwargs = {}
+        if week is None:
+            week = datetime.datetime.now().isocalendar()[1]
+
+        filter_kwargs["created__year"] = year
+        filter_kwargs["created__week"] = week
+
+        month_send_count = EmrifAib.objects.filter(**filter_kwargs).count()
+        month_error_count = EmrifError.objects.filter(**filter_kwargs).count()
+        data = {
+            "send_count": month_send_count,
+            "error_count": month_error_count,
+        }
+        serializer = EmrifWeekSerializer(data)
+        return Response(data=serializer.data, status=status.HTTP_200_OK)
+
+
+class EmrifDeptView(APIView):
+    pagination_class = None
+    permission_classes = [permissions.IsAdminUser]
+
+    def get(self, request):
+        year = request.GET.get("year", None)
+        filter_kwargs = {}
+        if year is None:
+            year = datetime.datetime.now().year
+        month = request.GET.get("month", None)
+        filter_kwargs = {}
+        if month is None:
+            month = datetime.datetime.now().month
+
+        dept = request.GET.get("dept", None)
+        deptList = dept.split(",")
+        if dept is None:
+            pass
+        data = []
+
+        filter_kwargs = {}
+        for dept in deptList:
+            filter_kwargs["created__year"] = year
+            filter_kwargs["created__month"] = month
+            filter_kwargs["emrifpc__equip__lab__dept__name"] = dept
+            month_send_count = EmrifAib.objects.filter(**filter_kwargs).count()
+            month_error_count = EmrifError.objects.filter(**filter_kwargs).count()
+            tempdata = {
+                "dept": dept,
+                "send_count": month_send_count,
+                "error_count": month_error_count,
+            }
+            data.append(tempdata)
+        serializer = EmrifDeptSerializer(data)
         return Response(data=serializer.data, status=status.HTTP_200_OK)

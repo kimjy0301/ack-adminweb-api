@@ -16,7 +16,7 @@ class EmrifLabSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = EmrifLab
-        fields = ["id", "name", "dept", "call_number", "bg_image"]
+        fields = ["id", "name", "dept", "call_number", "bg_image", "floor"]
 
 
 class EmrifEquipSerializer(serializers.ModelSerializer):
@@ -47,22 +47,22 @@ class EmrifPcSerializer(serializers.ModelSerializer):
             "status",
             "error_count",
             "position_left",
-            "position_right",
+            "position_top",
         ]
 
     def get_error_count(self, obj):
-        count = EmrifError.objects.filter(pc=obj).count()
+        count = EmrifError.objects.filter(emrifpc=obj).count()
         return count
 
 
 class EmrifErrorSerializer(serializers.ModelSerializer):
-    pc = EmrifPcSerializer(read_only=True)
+    emrifpc = EmrifPcSerializer(read_only=True)
 
     class Meta:
         model = EmrifError
         fields = [
             "id",
-            "pc",
+            "emrifpc",
             "title",
             "content",
         ]

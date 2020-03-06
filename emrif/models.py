@@ -40,7 +40,7 @@ class EmrifEquip(CoreModel):
 
 class EmrifError(CoreModel):
     id = models.AutoField(db_column="ID", primary_key=True)
-    pc = models.ForeignKey(
+    emrifpc = models.ForeignKey(
         "EmrifPc", models.DO_NOTHING, db_column="PC_ID", blank=True, null=True
     )
     title = models.CharField(db_column="TITLE", max_length=500, blank=True, null=True)
@@ -66,6 +66,7 @@ class EmrifLab(CoreModel):
         db_column="CALL_NUMBER", max_length=50, blank=True, null=True
     )
     bg_image = models.ImageField(db_column="BG_IMAGE", blank=True, null=True)
+    floor = models.CharField(db_column="FLOOR", max_length=50, blank=True, null=True)
 
     class Meta:
         managed = False
@@ -82,12 +83,10 @@ class EmrifPc(CoreModel):
         EmrifEquip, models.DO_NOTHING, db_column="EQUP_ID", blank=True, null=True
     )
     status = models.CharField(db_column="STATUS", max_length=50, blank=True, null=True)
-    position_left = models.CharField(
-        db_column="POSITION_LEFT", max_length=50, blank=True, null=True
+    position_left = models.IntegerField(
+        db_column="POSITION_LEFT", blank=True, null=True
     )
-    position_right = models.CharField(
-        db_column="POSITION_RIGHT", max_length=50, blank=True, null=True
-    )
+    position_top = models.IntegerField(db_column="POSITION_TOP", blank=True, null=True)
 
     class Meta:
         managed = False
@@ -98,3 +97,22 @@ class EmrifPc(CoreModel):
 
     def __str__(self):
         return f"{self.ip} / {self.equip}"
+
+
+class EmrifAib(models.Model):
+    id = models.AutoField(db_column="ID", primary_key=True)
+    pid = models.CharField(db_column="PID", max_length=10)
+    rstseqno = models.IntegerField(db_column="RSTSEQNO")
+    rstdate = models.CharField(db_column="RSTDATE", max_length=8)
+    emrifpc = models.ForeignKey(EmrifPc, models.DO_NOTHING, db_column="emrifpc")
+    state_flag = models.CharField(
+        db_column="STATEFLAG", max_length=50, blank=True, null=True
+    )
+    created = models.DateTimeField(db_column="created")
+
+    class Meta:
+        managed = False
+        db_table = "EMRIFAIB"
+
+    def __str__(self):
+        return f"PID = {self.pid}"

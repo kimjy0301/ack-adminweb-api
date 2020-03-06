@@ -1,5 +1,5 @@
 {
-  "python.pythonPath": "C:\\Users\\KimJiYong\\.virtualenvs\\ack-adminweb-api--U89JG5G\\Scripts\\python.exe",
+  "python.pythonPath": "C:\\Users\\User\\.virtualenvs\\ack-adminweb-api-cTDx-PNN\\Scripts\\python.exe",
   "python.formatting.provider": "black",
   "python.linting.flake8Enabled": true,
   "python.linting.enabled": true,

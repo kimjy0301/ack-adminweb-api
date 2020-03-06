@@ -25,7 +25,7 @@ SECRET_KEY = "cyl_xnf)57a=t9(5c72(p@(4_890!9ha30xun=1f^zn9xy$tk1"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["192.168.215.55", "localhost"]
+ALLOWED_HOSTS = ["192.168.215.8", "localhost", "127.0.0.1"]
 
 
 # Application definition
@@ -146,7 +146,7 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
@@ -175,7 +175,7 @@ REST_FRAMEWORK = {
 CORS_ORIGIN_WHITELIST = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
-    "http://192.168.215.55:3000",
+    "http://192.168.215.8:3000",
 ]
 
 
@@ -183,4 +183,3 @@ if not DEBUG:
     REST_FRAMEWORK = {
         "DEFAULT_RENDERER_CLASSES": ["rest_framework.renderers.JSONRenderer"]
     }
-
