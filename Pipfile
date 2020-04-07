@@ -17,6 +17,9 @@ pillow = "*"
 faker = "*"
 psutil = "*"
 django-cors-headers = "*"
+pip = "*"
+setuptools = "*"
+mod-wsgi = "*"
 
 [requires]
 python_version = "3.7"

@@ -9,5 +9,6 @@ router.register("equip", views.EmrifEquipViewSet)
 router.register("error", views.EmrifErrorViewSet)
 router.register("lab", views.EmrifLabViewSet)
 router.register("dept", views.EmrifDeptViewSet)
+router.register("emrifaib", views.EmrifAibViewSet)
 
 urlpatterns = router.urls

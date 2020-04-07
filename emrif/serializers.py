@@ -1,5 +1,6 @@
 from rest_framework import serializers
-from .models import EmrifPc, EmrifEquip, EmrifDept, EmrifError, EmrifLab
+from .models import EmrifPc, EmrifEquip, EmrifDept, EmrifError, EmrifLab, EmrifAib
+import datetime
 
 
 class EmrifDeptSerializer(serializers.ModelSerializer):
@@ -36,6 +37,7 @@ class EmrifEquipSerializer(serializers.ModelSerializer):
 
 class EmrifPcSerializer(serializers.ModelSerializer):
     equip = EmrifEquipSerializer(read_only=True)
+    send_count = serializers.SerializerMethodField()
     error_count = serializers.SerializerMethodField()
 
     class Meta:
@@ -45,13 +47,43 @@ class EmrifPcSerializer(serializers.ModelSerializer):
             "ip",
             "equip",
             "status",
+            "send_count",
             "error_count",
             "position_left",
             "position_top",
         ]
 
     def get_error_count(self, obj):
-        count = EmrifError.objects.filter(emrifpc=obj).count()
+        request = self.context.get("request")
+
+        startdate = request.GET.get("startdate", None)
+        enddate = request.GET.get("enddate", None)
+        try:
+            if startdate and enddate:
+                count = EmrifError.objects.filter(
+                    emrifpc=obj, created__date__range=[startdate, enddate],
+                ).count()
+            else:
+                count = EmrifError.objects.filter(emrifpc=obj).count()
+        except Exception:
+            count = EmrifError.objects.filter(emrifpc=obj).count()
+
+        return count
+
+    def get_send_count(self, obj):
+        request = self.context.get("request")
+        startdate = request.GET.get("startdate", None)
+        enddate = request.GET.get("enddate", None)
+        try:
+            if startdate and enddate:
+                count = EmrifAib.objects.filter(
+                    emrifpc=obj, created__date__range=[startdate, enddate],
+                ).count()
+            else:
+                count = EmrifAib.objects.filter(emrifpc=obj).count()
+        except Exception:
+            count = EmrifAib.objects.filter(emrifpc=obj).count()
+
         return count
 
 
@@ -67,3 +99,13 @@ class EmrifErrorSerializer(serializers.ModelSerializer):
             "content",
         ]
 
+
+class EmrifAIBSerializer(serializers.ModelSerializer):
+    emrifpc = EmrifPcSerializer(read_only=True)
+
+    class Meta:
+        model = EmrifAib
+        fields = [
+            "id",
+            "emrifpc",
+        ]
