@@ -1,6 +1,5 @@
 from rest_framework import serializers
 from .models import EmrifPc, EmrifEquip, EmrifDept, EmrifError, EmrifLab, EmrifAib
-import datetime
 
 
 class EmrifDeptSerializer(serializers.ModelSerializer):

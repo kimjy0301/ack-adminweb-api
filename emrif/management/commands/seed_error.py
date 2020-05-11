@@ -25,6 +25,6 @@ class Command(BaseCommand):
             title = f"Error {time}"
             content = fake.sentence()
 
-            EmrifError.objects.create(pc=pc, title=title, content=content)
+            EmrifError.objects.create(emrifpc=pc, title=title, content=content)
         self.stdout.write(self.style.SUCCESS(f"Everything seeded"))
 

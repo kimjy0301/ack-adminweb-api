@@ -76,4 +76,3 @@ class UsersViewSet(ModelViewSet):
     #         except Room.DoesNotExist:
     #             pass
     #     return Response(status=status.HTTP_400_BAD_REQUEST)
-

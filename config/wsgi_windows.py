@@ -1,18 +1,23 @@
-activate_this = (
-    "C:/Users/KimJiYong/.virtualenvs/ACK_Python-wYgVXe1N/Scripts/activate_this.py"
-)
-exec(open(activate_this).read(), dict(__file__=activate_this))
-
 import os
 import sys
 import site
 from django.core.wsgi import get_wsgi_application
 
 
-# Add the site-packages of the chosen virtualenv to work with
-site.addsitedir("C:/Users/KimJiYong/.virtualenvs/ACK_Python-wYgVXe1N/Lib/site-packages")
+# Pipenv 가상환경 경로 = "C:/Users/User/.virtualenvs/ack-adminweb-api-cTDx-PNN
 
-# Add the app's directory to the PYTHONPATH
+activate_this = (
+    "C:/Users/User/.virtualenvs/ack-adminweb-api-cTDx-PNN/Scripts/activate_this.py"
+)
+exec(open(activate_this).read(), dict(__file__=activate_this))
+
+
+# Add the site-packages of the chosen virtualenv to work with
+site.addsitedir(
+    "C:/Users/User/.virtualenvs/ack-adminweb-api-cTDx-PNN/Lib/site-packages"
+)
+
+# Add the app's directory to the PYTHONPATH 프로젝트경로 추가
 sys.path.append("C:/Work/ACK_Python")
 sys.path.append("C:/Work/ACK_Python/config")
 
