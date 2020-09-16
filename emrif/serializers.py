@@ -59,13 +59,13 @@ class EmrifPcSerializer(serializers.ModelSerializer):
         enddate = request.GET.get("enddate", None)
         try:
             if startdate and enddate:
-                count = EmrifError.objects.filter(
-                    emrifpc=obj, created__date__range=[startdate, enddate],
+                count = obj.emriferror.filter(
+                    created__date__range=[startdate, enddate],
                 ).count()
             else:
-                count = EmrifError.objects.filter(emrifpc=obj).count()
+                count = obj.emriferror.count()
         except Exception:
-            count = EmrifError.objects.filter(emrifpc=obj).count()
+            count = obj.emriferror.count()
 
         return count
 
@@ -75,13 +75,13 @@ class EmrifPcSerializer(serializers.ModelSerializer):
         enddate = request.GET.get("enddate", None)
         try:
             if startdate and enddate:
-                count = EmrifAib.objects.filter(
-                    emrifpc=obj, created__date__range=[startdate, enddate],
+                count = obj.emrifaib.filter(
+                    created__date__range=[startdate, enddate],
                 ).count()
             else:
-                count = EmrifAib.objects.filter(emrifpc=obj).count()
+                count = obj.emrifaib.count()
         except Exception:
-            count = EmrifAib.objects.filter(emrifpc=obj).count()
+            count = obj.emrifaib.count()
 
         return count
 
@@ -91,12 +91,7 @@ class EmrifErrorSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = EmrifError
-        fields = [
-            "id",
-            "emrifpc",
-            "title",
-            "content",
-        ]
+        fields = ["id", "emrifpc", "title", "content", "state_flag"]
 
 
 class EmrifAIBSerializer(serializers.ModelSerializer):

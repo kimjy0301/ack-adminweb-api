@@ -15,7 +15,7 @@ from rest_framework import status
 
 
 class EmrifPcViewSet(ModelViewSet):
-    queryset = EmrifPc.objects.all()
+    queryset = EmrifPc.objects.select_related("equip__lab__dept").all()
     serializer_class = EmrifPcSerializer
 
     def get_permissions(self):
@@ -96,6 +96,30 @@ class EmrifErrorViewSet(ModelViewSet):
             permission_classes = [permissions.IsAdminUser]
 
         return [permission() for permission in permission_classes]
+
+    @action(detail=False, url_path="search")
+    def search(self, request):
+
+        state_flag = request.GET.get("state_flag", None)
+        emrifpcid = request.GET.get("emrifpcid", None)
+
+        filter_kwargs = {}
+        if state_flag is not None:
+            filter_kwargs["state_flag"] = state_flag
+        if emrifpcid is not None:
+            filter_kwargs["emrifpc__id"] = int(emrifpcid)
+
+        paginator = self.paginator
+        try:
+            emriferrors = EmrifError.objects.filter(**filter_kwargs)
+        except ValueError:
+            emriferrors = EmrifError.objects.all()
+        results = paginator.paginate_queryset(emriferrors, request)
+        serializer = EmrifErrorSerializer(
+            instance=results, many=True, context={"request": request}
+        )
+
+        return paginator.get_paginated_response(serializer.data)
 
 
 class EmrifLabViewSet(ModelViewSet):

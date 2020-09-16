@@ -6,21 +6,26 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('emrif', '0002_auto_20200303_1135'),
+        ("emrif", "0002_auto_20200303_1135"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='EmrifAib',
+            name="EmrifAib",
             fields=[
-                ('id', models.AutoField(db_column='ID', primary_key=True, serialize=False)),
-                ('pid', models.CharField(db_column='PID', max_length=10)),
-                ('state_flag', models.CharField(blank=True, db_column='STATEFLAG', max_length=50, null=True)),
-                ('created', models.DateTimeField(db_column='created')),
+                (
+                    "id",
+                    models.AutoField(db_column="ID", primary_key=True, serialize=False),
+                ),
+                ("pid", models.CharField(db_column="PID", max_length=10)),
+                (
+                    "state_flag",
+                    models.CharField(
+                        blank=True, db_column="STATEFLAG", max_length=50, null=True
+                    ),
+                ),
+                ("created", models.DateTimeField(db_column="created")),
             ],
-            options={
-                'db_table': 'EMRIFAIB',
-                'managed': False,
-            },
+            options={"db_table": "EMRIFAIB", "managed": False,},
         ),
     ]

@@ -1,5 +1,5 @@
 activate_this = (
-    "C:/Users/User/.virtualenvs/ack-adminweb-api-cTDx-PNN/Scripts/activate_this.py"
+    "C:/Users/KimJiYong/.virtualenvs/ack-adminweb-api-FMmkDHpf/Scripts/activate_this.py"
 )
 exec(open(activate_this).read(), dict(__file__=activate_this))
 
@@ -11,7 +11,7 @@ from django.core.wsgi import get_wsgi_application
 
 # Add the site-packages of the chosen virtualenv to work with
 site.addsitedir(
-    "C:/Users/User/.virtualenvs/ack-adminweb-api-cTDx-PNN/Lib/site-packages"
+    "C:/Users/KimJiYong/.virtualenvs/ack-adminweb-api-FMmkDHpf/Lib/site-packages"
 )
 
 # Add the app's directory to the PYTHONPATH

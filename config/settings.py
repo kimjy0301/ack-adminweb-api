@@ -25,7 +25,7 @@ SECRET_KEY = "cyl_xnf)57a=t9(5c72(p@(4_890!9ha30xun=1f^zn9xy$tk1"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["192.168.215.8", "localhost", "127.0.0.1"]
+ALLOWED_HOSTS = ["192.168.215.8", "localhost", "127.0.0.1", "10.80.116.150"]
 
 
 # Application definition
@@ -180,5 +180,8 @@ CORS_ORIGIN_WHITELIST = [
 
 if not DEBUG:
     REST_FRAMEWORK = {
-        "DEFAULT_RENDERER_CLASSES": ["rest_framework.renderers.JSONRenderer"]
+        "DEFAULT_RENDERER_CLASSES": ["rest_framework.renderers.JSONRenderer"],
+        "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+        "PAGE_SIZE": 1000,
+        "DEFAULT_AUTHENTICATION_CLASSES": ["config.authentication.JWTAuthentication",],
     }

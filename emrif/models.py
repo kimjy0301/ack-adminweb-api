@@ -17,7 +17,12 @@ class EmrifDept(CoreModel):
 class EmrifEquip(CoreModel):
     id = models.AutoField(db_column="ID", primary_key=True)
     lab = models.ForeignKey(
-        "EmrifLab", models.DO_NOTHING, db_column="LAB_ID", blank=True, null=True
+        "EmrifLab",
+        models.DO_NOTHING,
+        db_column="LAB_ID",
+        blank=True,
+        null=True,
+        related_name="emrifequip",
     )
     name = models.CharField(db_column="NAME", max_length=50, blank=True, null=True)
     equip_company = models.CharField(
@@ -41,11 +46,20 @@ class EmrifEquip(CoreModel):
 class EmrifError(CoreModel):
     id = models.AutoField(db_column="ID", primary_key=True)
     emrifpc = models.ForeignKey(
-        "EmrifPc", models.DO_NOTHING, db_column="PC_ID", blank=True, null=True
+        "EmrifPc",
+        models.DO_NOTHING,
+        db_column="PC_ID",
+        blank=True,
+        null=True,
+        related_name="emriferror",
     )
     title = models.CharField(db_column="TITLE", max_length=500, blank=True, null=True)
     content = models.CharField(
         db_column="CONTENT", max_length=2000, blank=True, null=True
+    )
+
+    state_flag = models.CharField(
+        max_length=50, db_column="STATE_FLAG", blank=True, null=True,
     )
 
     class Meta:
@@ -53,14 +67,19 @@ class EmrifError(CoreModel):
         db_table = "EMRIF_ERROR"
 
     def __str__(self):
-        return self.name
+        return f"{str(self.id)} / {self.title}"
 
 
 class EmrifLab(CoreModel):
     id = models.AutoField(db_column="ID", primary_key=True)
     name = models.CharField(db_column="NAME", max_length=50, blank=True, null=True)
     dept = models.ForeignKey(
-        EmrifDept, models.DO_NOTHING, db_column="DEPT_ID", blank=True, null=True
+        EmrifDept,
+        models.DO_NOTHING,
+        db_column="DEPT_ID",
+        blank=True,
+        null=True,
+        related_name="emriflab",
     )
     call_number = models.CharField(
         db_column="CALL_NUMBER", max_length=50, blank=True, null=True
@@ -80,7 +99,12 @@ class EmrifPc(CoreModel):
     id = models.AutoField(db_column="ID", primary_key=True)
     ip = models.CharField(db_column="IP", max_length=50, blank=True, null=True)
     equip = models.ForeignKey(
-        EmrifEquip, models.DO_NOTHING, db_column="EQUP_ID", blank=True, null=True
+        EmrifEquip,
+        models.DO_NOTHING,
+        db_column="EQUP_ID",
+        blank=True,
+        null=True,
+        related_name="emrifpc",
     )
     status = models.CharField(db_column="STATUS", max_length=50, blank=True, null=True)
     position_left = models.IntegerField(
@@ -104,7 +128,10 @@ class EmrifAib(models.Model):
     pid = models.CharField(db_column="PID", max_length=10)
     rstseqno = models.IntegerField(db_column="RSTSEQNO")
     rstdate = models.CharField(db_column="RSTDATE", max_length=8)
-    emrifpc = models.ForeignKey(EmrifPc, models.DO_NOTHING, db_column="emrifpc")
+    emrifpc = models.ForeignKey(
+        "EmrifPc", models.DO_NOTHING, db_column="emrifpc", related_name="emrifaib"
+    )
+
     state_flag = models.CharField(
         db_column="STATEFLAG", max_length=50, blank=True, null=True
     )

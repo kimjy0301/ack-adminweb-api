@@ -12,10 +12,13 @@ from .serializers import (
 from emrif.models import EmrifAib, EmrifError
 import datetime
 
+from config.authentication import JWTAuthentication
+
 
 class ServerStatusView(APIView):
     pagination_class = None
     permission_classes = [permissions.IsAdminUser]
+    authentication_classes = [JWTAuthentication]
 
     def get(self, request):
         memory = psutil.virtual_memory()
@@ -51,6 +54,7 @@ class ServerStatusView(APIView):
 class EmrifYearView(APIView):
     pagination_class = None
     permission_classes = [permissions.IsAdminUser]
+    authentication_classes = [JWTAuthentication]
 
     def get(self, request):
         year = request.GET.get("year", None)
@@ -77,6 +81,7 @@ class EmrifYearView(APIView):
 class EmrifWeekView(APIView):
     pagination_class = None
     permission_classes = [permissions.IsAdminUser]
+    authentication_classes = [JWTAuthentication]
 
     def get(self, request):
         year = request.GET.get("year", None)
@@ -106,6 +111,7 @@ class EmrifWeekView(APIView):
 class EmrifDeptView(APIView):
     pagination_class = None
     permission_classes = [permissions.IsAdminUser]
+    authentication_classes = [JWTAuthentication]
 
     def get(self, request):
         year = request.GET.get("year", None)
