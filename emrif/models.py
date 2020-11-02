@@ -62,6 +62,8 @@ class EmrifError(CoreModel):
         max_length=50, db_column="STATE_FLAG", blank=True, null=True,
     )
 
+    created = models.DateTimeField(db_column="created")
+
     class Meta:
         managed = False
         db_table = "EMRIF_ERROR"

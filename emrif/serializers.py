@@ -88,10 +88,11 @@ class EmrifPcSerializer(serializers.ModelSerializer):
 
 class EmrifErrorSerializer(serializers.ModelSerializer):
     emrifpc = EmrifPcSerializer(read_only=True)
+    created = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S")
 
     class Meta:
         model = EmrifError
-        fields = ["id", "emrifpc", "title", "content", "state_flag"]
+        fields = ["id", "emrifpc", "title", "content", "state_flag", "created"]
 
 
 class EmrifAIBSerializer(serializers.ModelSerializer):
