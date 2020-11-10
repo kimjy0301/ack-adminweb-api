@@ -1,7 +1,7 @@
-activate_this = (
-    "C:/Users/KimJiYong/.virtualenvs/ack-adminweb-api-FMmkDHpf/Scripts/activate_this.py"
-)
-exec(open(activate_this).read(), dict(__file__=activate_this))
+# activate_this = (
+#     "C:/Users/KimJiYong/.virtualenvs/ack-adminweb-api-FMmkDHpf/Scripts/activate_this.py"
+# )
+# exec(open(activate_this).read(), dict(__file__=activate_this))
 
 import os
 import sys

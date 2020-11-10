@@ -12,6 +12,7 @@ from rest_framework import permissions
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework import status
+from django.db import transaction
 
 
 class EmrifPcViewSet(ModelViewSet):
@@ -90,7 +91,11 @@ class EmrifErrorViewSet(ModelViewSet):
     serializer_class = EmrifErrorSerializer
 
     def get_permissions(self):
-        if self.action == "list" or self.action == "retrieve":
+        if (
+            self.action == "list"
+            or self.action == "retrieve"
+            or self.action == "deleteall"
+        ):
             permission_classes = [permissions.AllowAny]
         else:
             permission_classes = [permissions.IsAdminUser]
@@ -120,6 +125,18 @@ class EmrifErrorViewSet(ModelViewSet):
         )
 
         return paginator.get_paginated_response(serializer.data)
+
+    @action(detail=False, url_path="deleteall", methods=["POST"])
+    @transaction.atomic
+    def deleteall(self, request):
+
+        emriferrors = EmrifError.objects.filter(state_flag="L")
+        emriferrors.update(state_flag="O")
+
+        emrifpcs = EmrifPc.objects.filter(status="ERROR")
+        emrifpcs.update(status="SUCCESS")
+
+        return Response(status=status.HTTP_200_OK)
 
 
 class EmrifLabViewSet(ModelViewSet):

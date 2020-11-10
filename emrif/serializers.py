@@ -57,13 +57,14 @@ class EmrifPcSerializer(serializers.ModelSerializer):
 
         startdate = request.GET.get("startdate", None)
         enddate = request.GET.get("enddate", None)
+
         try:
             if startdate and enddate:
                 count = obj.emriferror.filter(
                     created__date__range=[startdate, enddate],
                 ).count()
             else:
-                count = obj.emriferror.count()
+                count = obj.emriferror.filter(state_flag="L").count()
         except Exception:
             count = obj.emriferror.count()
 
@@ -88,11 +89,21 @@ class EmrifPcSerializer(serializers.ModelSerializer):
 
 class EmrifErrorSerializer(serializers.ModelSerializer):
     emrifpc = EmrifPcSerializer(read_only=True)
-    created = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S")
+    created = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", required=False)
 
     class Meta:
         model = EmrifError
         fields = ["id", "emrifpc", "title", "content", "state_flag", "created"]
+
+    def update(self, instance, validated_data):
+        instance.state_flag = validated_data.get("state_flag", instance.state_flag)
+        instance.save()
+        emrifpc = instance.emrifpc
+        emriferror = emrifpc.emriferror
+        if emriferror.filter(state_flag="L").count() == 0:
+            emrifpc.status = "SUCCESS"
+            emrifpc.save()
+        return instance
 
 
 class EmrifAIBSerializer(serializers.ModelSerializer):
