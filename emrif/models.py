@@ -2,7 +2,7 @@ from django.db import models
 from core.models import CoreModel
 
 
-class EmrifDept(CoreModel):
+class EmrifDept(models.Model):
     id = models.AutoField(db_column="ID", primary_key=True)
     name = models.CharField(db_column="NAME", max_length=50, blank=True, null=True)
 
@@ -62,8 +62,6 @@ class EmrifError(CoreModel):
         max_length=50, db_column="STATE_FLAG", blank=True, null=True,
     )
 
-    created = models.DateTimeField(db_column="created")
-
     class Meta:
         managed = False
         db_table = "EMRIF_ERROR"
@@ -103,7 +101,7 @@ class EmrifPc(CoreModel):
     equip = models.ForeignKey(
         EmrifEquip,
         models.DO_NOTHING,
-        db_column="EQUP_ID",
+        db_column="EQUIP_ID",
         blank=True,
         null=True,
         related_name="emrifpc",
@@ -126,7 +124,7 @@ class EmrifPc(CoreModel):
 
 
 class EmrifAib(models.Model):
-    id = models.AutoField(db_column="ID", primary_key=True)
+    id = models.AutoField(db_column="id", primary_key=True)
     pid = models.CharField(db_column="PID", max_length=10)
     rstseqno = models.IntegerField(db_column="RSTSEQNO")
     rstdate = models.CharField(db_column="RSTDATE", max_length=8)
@@ -137,7 +135,8 @@ class EmrifAib(models.Model):
     state_flag = models.CharField(
         db_column="STATEFLAG", max_length=50, blank=True, null=True
     )
-    created = models.DateTimeField(db_column="created")
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
 
     class Meta:
         managed = False

@@ -8,6 +8,7 @@ from .serializers import (
     EmrifYearSerializer,
     EmrifWeekSerializer,
     EmrifDeptSerializer,
+    AtypeStatusSerializer,
 )
 from emrif.models import EmrifAib, EmrifError
 import datetime
@@ -17,7 +18,7 @@ from config.authentication import JWTAuthentication
 
 class ServerStatusView(APIView):
     pagination_class = None
-    permission_classes = [permissions.IsAdminUser]
+    permission_classes = [permissions.AllowAny]
     authentication_classes = [JWTAuthentication]
 
     def get(self, request):
@@ -51,9 +52,56 @@ class ServerStatusView(APIView):
         return Response(data=serializer.data, status=status.HTTP_200_OK)
 
 
+class AtypeStatusView(APIView):
+    pagination_class = None
+    permission_classes = [permissions.AllowAny]
+    authentication_classes = [JWTAuthentication]
+
+    def get(self, request):
+        process_names = [
+            "Philips_HL7_ManagementSystem.exe",
+            "Mediana_HL7_ManagementSystem.exe",
+            "Mindray_HL7_ManagementSystem.exe",
+        ]
+
+        philipsStatus = False
+        medianaStatus = False
+        MindrayStatus = False
+
+        for proc in psutil.process_iter():
+            try:
+                # 프로세스 이름, PID값 가져오기
+                processName = proc.name()
+                try:
+                    if process_names.index(processName) != -1:
+                        if processName == "Philips_HL7_ManagementSystem.exe":
+                            philipsStatus = True
+                        elif processName == "Mediana_HL7_ManagementSystem.exe":
+                            medianaStatus = True
+                        elif processName == "Mindray_HL7_ManagementSystem.exe":
+                            MindrayStatus = True
+                except Exception:
+                    pass
+            except (
+                psutil.NoSuchProcess,
+                psutil.AccessDenied,
+                psutil.ZombieProcess,
+            ):  # 예외처리
+                pass
+
+        data = {
+            "philipsStatus": philipsStatus,
+            "medianaStatus": medianaStatus,
+            "MindrayStatus": MindrayStatus,
+        }
+
+        serializer = AtypeStatusSerializer(data)
+        return Response(data=serializer.data, status=status.HTTP_200_OK)
+
+
 class EmrifYearView(APIView):
     pagination_class = None
-    permission_classes = [permissions.IsAdminUser]
+    permission_classes = [permissions.AllowAny]
     authentication_classes = [JWTAuthentication]
 
     def get(self, request):
@@ -80,7 +128,7 @@ class EmrifYearView(APIView):
 
 class EmrifWeekView(APIView):
     pagination_class = None
-    permission_classes = [permissions.IsAdminUser]
+    permission_classes = [permissions.AllowAny]
     authentication_classes = [JWTAuthentication]
 
     def get(self, request):
@@ -110,7 +158,7 @@ class EmrifWeekView(APIView):
 
 class EmrifDeptView(APIView):
     pagination_class = None
-    permission_classes = [permissions.IsAdminUser]
+    permission_classes = [permissions.AllowAny]
     authentication_classes = [JWTAuthentication]
 
     def get(self, request):

@@ -24,6 +24,19 @@ class ServerStatusSerializer(serializers.BaseSerializer):
         }
 
 
+class AtypeStatusSerializer(serializers.BaseSerializer):
+    philipsStatus = serializers.CharField()
+    medianaStatus = serializers.CharField()
+    MindrayStatus = serializers.CharField()
+
+    def to_representation(self, instance):
+        return {
+            "philipsStatus": instance.get("philipsStatus", None),
+            "medianaStatus": instance.get("medianaStatus", None),
+            "MindrayStatus": instance.get("MindrayStatus", None),
+        }
+
+
 class EmrifYearSerializer(serializers.BaseSerializer):
     month = serializers.CharField()
     send_count = serializers.IntegerField()

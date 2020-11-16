@@ -23,7 +23,7 @@ class EmrifPcViewSet(ModelViewSet):
         if self.action == "list" or self.action == "retrieve":
             permission_classes = [permissions.AllowAny]
         else:
-            permission_classes = [permissions.IsAdminUser]
+            permission_classes = [permissions.AllowAny]
 
         return [permission() for permission in permission_classes]
 
@@ -67,7 +67,7 @@ class EmrifDeptViewSet(ModelViewSet):
         if self.action == "list" or self.action == "retrieve":
             permission_classes = [permissions.AllowAny]
         else:
-            permission_classes = [permissions.IsAdminUser]
+            permission_classes = [permissions.AllowAny]
 
         return [permission() for permission in permission_classes]
 
@@ -81,7 +81,7 @@ class EmrifEquipViewSet(ModelViewSet):
         if self.action == "list" or self.action == "retrieve":
             permission_classes = [permissions.AllowAny]
         else:
-            permission_classes = [permissions.IsAdminUser]
+            permission_classes = [permissions.AllowAny]
 
         return [permission() for permission in permission_classes]
 
@@ -98,7 +98,7 @@ class EmrifErrorViewSet(ModelViewSet):
         ):
             permission_classes = [permissions.AllowAny]
         else:
-            permission_classes = [permissions.IsAdminUser]
+            permission_classes = [permissions.AllowAny]
 
         return [permission() for permission in permission_classes]
 
@@ -148,7 +148,7 @@ class EmrifLabViewSet(ModelViewSet):
         if self.action == "list" or self.action == "retrieve":
             permission_classes = [permissions.AllowAny]
         else:
-            permission_classes = [permissions.IsAdminUser]
+            permission_classes = [permissions.AllowAny]
 
         return [permission() for permission in permission_classes]
 
@@ -176,7 +176,7 @@ class EmrifAibViewSet(ModelViewSet):
         if self.action == "list" or self.action == "retrieve":
             permission_classes = [permissions.AllowAny]
         else:
-            permission_classes = [permissions.IsAdminUser]
+            permission_classes = [permissions.AllowAny]
 
         return [permission() for permission in permission_classes]
 

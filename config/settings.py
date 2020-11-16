@@ -109,13 +109,25 @@ WSGI_APPLICATION = "config.wsgi.application"
 #     }
 # }
 
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "sql_server.pyodbc",
+#         "NAME": "emrif",
+#         "USER": "ack",
+#         "PASSWORD": "ack1236",
+#         "HOST": "183.97.137.113",
+#         "PORT": "",
+#         "OPTIONS": {"driver": "ODBC Driver 13 for SQL Server"},
+#     }
+# }
+
 DATABASES = {
     "default": {
         "ENGINE": "sql_server.pyodbc",
-        "NAME": "emrif",
-        "USER": "ack",
-        "PASSWORD": "ack1236",
-        "HOST": "183.97.137.113",
+        "NAME": "MEIF",
+        "USER": "meif_user",
+        "PASSWORD": "dlsxjvpdltm1!",
+        "HOST": "10.111.30.67",
         "PORT": "",
         "OPTIONS": {"driver": "ODBC Driver 13 for SQL Server"},
     }
@@ -182,6 +194,9 @@ if not DEBUG:
     REST_FRAMEWORK = {
         "DEFAULT_RENDERER_CLASSES": ["rest_framework.renderers.JSONRenderer"],
         "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
-        "PAGE_SIZE": 1000,
-        "DEFAULT_AUTHENTICATION_CLASSES": ["config.authentication.JWTAuthentication",],
+        "PAGE_SIZE": 150,
+        "DEFAULT_AUTHENTICATION_CLASSES": [
+            "config.authentication.JWTAuthentication",
+            "rest_framework.authentication.SessionAuthentication",
+        ],
     }

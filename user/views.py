@@ -18,11 +18,12 @@ class UsersViewSet(ModelViewSet):
 
     def get_permissions(self):
         if self.action == "list":
-            permission_classes = [permissions.IsAdminUser]
+            permission_classes = [permissions.IsAuthenticated]
         elif (
             self.action == "create"
             or self.action == "retrieve"
             or self.action == "favs"
+            or self.action == "login"
         ):
             permission_classes = [permissions.AllowAny]
         else:
